@@ -10,17 +10,21 @@
         <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
       </div>
     </header>
-    <producto-vue></producto-vue>
-    <router-view/>
+    <articulos></articulos>
+    <footer-page></footer-page>
   </div>
 </template>
 
 <script>
-import ProductoVue from "@/components/ProductoVue";
+import Articulos from "@/views/Articulos.vue";
 import MenuVeu from "@/components/MenuVeu";
+import FooterPage from "@/components/FooterPage"
+
+
+
 
 export default {
-  components: {ProductoVue,MenuVeu}
+  components: {Articulos,MenuVeu, FooterPage}
 }
 </script>
 
