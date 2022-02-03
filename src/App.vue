@@ -2,10 +2,15 @@
   <div id="app">
     <div id="nav">
       <menu-veu></menu-veu>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <producto-vue></producto-vue>
     </div>
+    <header class="masthead">
+      <div class="container">
+        <div class="masthead-subheading">Welcome To Our Studio!</div>
+        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+      </div>
+    </header>
+    <producto-vue></producto-vue>
     <router-view/>
   </div>
 </template>
@@ -13,7 +18,7 @@
 <script>
 import ProductoVue from "@/components/ProductoVue";
 import MenuVeu from "@/components/MenuVeu";
-import { realconsole } from 'js/scripts'
+
 export default {
   components: {ProductoVue,MenuVeu}
 }
@@ -11552,6 +11557,7 @@ header.masthead {
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
+  margin-top: 0px!important;
 }
 header.masthead .masthead-subheading {
   font-size: 1.5rem;
@@ -11572,6 +11578,7 @@ header.masthead .masthead-heading {
   header.masthead {
     padding-top: 17rem;
     padding-bottom: 12.5rem;
+    margin-top: -65px!important;
   }
   header.masthead .masthead-subheading {
     font-size: 2.25rem;
