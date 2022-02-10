@@ -1,13 +1,6 @@
-/*!
-* Start Bootstrap - Agency v7.0.10 (https://startbootstrap.com/theme/agency)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
+import { ScrollSpy } from 'bootstrap'
 
-window.addEventListener('DOMContentLoaded', event => {
+window.addEventListener('DOMContentLoaded', () => {
 
     // Navbar shrink function
     var navbarShrink = function () {
@@ -32,11 +25,11 @@ window.addEventListener('DOMContentLoaded', event => {
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = document.body.querySelector('#mainNav');
     if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
+        new ScrollSpy(document.body, {
             target: '#mainNav',
             offset: 74,
         });
-    };
+    }
 
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -50,5 +43,38 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
+
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+
+    const track = document.querySelector('.track');
+
+    let carouselWidth = document.querySelector('.carousel-container').offsetWidth;
+
+    window.addEventListener('resize', () => {
+        carouselWidth = document.querySelector('.carousel-container').offsetWidth;
+    })
+
+    let index = 0;
+
+    next.addEventListener('click', () => {
+        index++;
+        prev.classList.add('show');
+        track.style.transform = `translateX(-${index * carouselWidth}px)`;
+
+        if (track.offsetWidth - (index * carouselWidth) < carouselWidth) {
+            next.classList.add('hide');
+        }
+    })
+
+    prev.addEventListener('click', () => {
+        index--;
+        next.classList.remove('hide');
+        if (index === 0) {
+            prev.classList.remove('show');
+        }
+        track.style.transform = `translateX(-${index * carouselWidth}px)`;
+    })
+
 
 });

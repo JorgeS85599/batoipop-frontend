@@ -1,6 +1,7 @@
 <template>
   <div>
     <header-page></header-page>
+    
     <!-- Portfolio Grid-->
     <section class="page-section bg-light" id="portfolio">
       <div class="container">
@@ -86,15 +87,15 @@
                         {{ this.articulo.owner.name }}
                       </p>
                       <ul class="stars">
-                        <li 
-                        v-for="star in this.articulo.valoration"
-                        :key="star"
+                        <li
+                          v-for="star in this.articulo.valoration"
+                          :key="star"
                         >
                           <i class="bi bi-star-fill" style="color: #f3da35"></i>
                         </li>
-                        <li 
-                        v-for="cowStar in (5 - this.articulo.valoration)"
-                        :key="cowStar"
+                        <li
+                          v-for="cowStar in 5 - this.articulo.valoration"
+                          :key="cowStar"
                         >
                           <i class="bi bi-star" style="color: #f3da35"></i>
                         </li>
@@ -125,7 +126,7 @@
                 </tr>
                 <tr>
                   <th scope="row">Etiquetas</th>
-                  <td>{{this.getTagsName()}}</td>
+                  <td>{{ this.getTagsName() }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Ubicación</th>
@@ -251,17 +252,17 @@ export default {
   },
   methods: {
     getTagsName() {
-      let etiquetas = ""
-      this.articulo.tags.forEach((tagElement,index) => {
+      let etiquetas = "";
+      this.articulo.tags.forEach((tagElement, index) => {
         if (index == this.articulo.tags.length - 1) {
-          etiquetas += tagElement.name
+          etiquetas += tagElement.name;
         } else {
-          etiquetas += (tagElement.name + ' | ')
+          etiquetas += tagElement.name + " | ";
         }
       });
-      return etiquetas
-    }
-  }
+      return etiquetas;
+    },
+  },
 };
 </script>
 
