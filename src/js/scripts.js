@@ -8,10 +8,14 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!navbarCollapsible) {
             return;
         }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
+        if(location.pathname.startsWith('/cuenta/')||location.pathname.startsWith('/login/')){
             navbarCollapsible.classList.add('navbar-shrink')
+        }else{
+            if (window.scrollY === 0) {
+                navbarCollapsible.classList.remove('navbar-shrink')
+            } else {
+                navbarCollapsible.classList.add('navbar-shrink')
+            }
         }
 
     };

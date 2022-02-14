@@ -79,10 +79,7 @@
                     />
                   </div>
                   <div class="col-6">
-                    <div
-                      class="row"
-                      style="display: flex; justify-content: flex-start"
-                    >
+                    <div class="row " style="display: flex; justify-content: flex-start">
                       <p class="portfolio-caption-heading">
                         {{ this.articulo.owner.name }}
                       </p>
@@ -266,5 +263,5 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 </style>

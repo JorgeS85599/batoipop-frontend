@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-const baseURL = 'http://batoipop.my/api';
+const baseURL = 'http://laravel.my/api';
 
 const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
     getPerPage: (page) => axios.get(`${baseURL}/articles?page=${page}`),
+    getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articles?page=${page}&owner_id=${id}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
@@ -24,7 +25,7 @@ const usuarios = {
     getAll: () => axios.get(`${baseURL}/users`),
     getPerPage: (page) => axios.get(`${baseURL}/users?page=${page}`),
     getOne: (id) => axios.get(`${baseURL}/users/${id}`),
-    create: (item) => axios.post(`${baseURL}/eusers`, item),
+    create: (item) => axios.post(`${baseURL}/users`, item),
     modify: (item) => axios.put(`${baseURL}/users/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
 };
