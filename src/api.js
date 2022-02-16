@@ -4,7 +4,7 @@ const baseURL = 'http://batoipop.my/api';
 
 const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
-    getPerPage: (page) => axios.get(`${baseURL}/articles?page=${page}`),
+    getPerPage: (page,filter) => axios.get(`${baseURL}/articles?page=${page}&${filter}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
@@ -29,11 +29,21 @@ const usuarios = {
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
 };
 
+const tags = {
+    getAll: () => axios.get(`${baseURL}/tags`),
+    getPerPage: (page) => axios.get(`${baseURL}/tags?page=${page}`),
+    getOne: (id) => axios.get(`${baseURL}/tags/${id}`),
+    create: (item) => axios.post(`${baseURL}/etags`, item),
+    modify: (item) => axios.put(`${baseURL}/tags/${item.id}`, item),
+    delete: (id) => axios.delete(`${baseURL}/tags/${id}`),
+};
+
 
 
 
 export default {
     articulos,
     categorias,
-    usuarios
+    usuarios,
+    tags
 };

@@ -20,7 +20,7 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
               <li class="nav-item">
-                <router-link class="nav-link" to="/">Home</router-link>
+                <router-link class="nav-link" to="/articulos">Home</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link" to="/login">Login</router-link>
@@ -55,6 +55,8 @@ export default {
   components: { FooterPage },
   mounted() {
     this.$store.dispatch("loadCategorias");
+    this.$store.dispatch("loadTags");
+
   },
 };
 </script>
@@ -11961,7 +11963,7 @@ p {
 
 @media (min-width: 768px) {
   section {
-    padding: 9rem 0;
+    padding: 5rem 0;
   }
 }
 .btn-xl {
