@@ -70,8 +70,8 @@
                 </button>
               </div>
               <div class="row down-content portfolio-caption">
-                <div class="col-9" style="display: flex; flex-direction: row; backgroud-color:#f6f6f6f">
-                  <div class="col-6">
+                <div class="col-9" style="display: flex; flex-direction: row;background-color:#dbdbdb; border-radius:15px;">
+                  <div class="col-6" style="display: flex; align-content:center ;padding: 8px;">
                     <img
                       class="img-fluid"
                       src="@/assets/img/portfolio/1.jpg"
@@ -136,16 +136,11 @@
       </div>
     </section>
     <section class="page-section">
-      <div>
-          <GoogleMap :latitud="this.articulo.latitud" :longitud="this.articulo.longitud"/>
-      </div>
-    </section>
-    <section class="page-section">
       <div class="container">
         <div
           style="display: flex; justify-content: center; margin-bottom: 25px"
         >
-          <div v-for="(message,index) in this.articulo.messages" :key="index" class="col-9" style="display: flex; flex-direction: row">
+          <div class="col-9" style="display: flex; flex-direction: row">
             <div class="col-lg-1 col-md-2 col-sm-3 col-4">
               <!-- User photo-->
               <img
@@ -153,13 +148,15 @@
                 src="@/assets/img/portfolio/1.jpg"
                 alt="..."
               />
-              <p>{{message[1]}}</p>
             </div>
             <div
               class="col-lg-11 col-md-10 col-sm-9 col-8"
               style="margin-left: 10px"
             >
-              <p>{{message[0]}}</p>
+              <p>
+                ("Mensaje")Lorem ipsume dolor sit amet, adipisicing elite.
+                Itaque, corporis nulla aspernatur.
+              </p>
             </div>
           </div>
         </div>
@@ -234,7 +231,6 @@
 
 <script>
 import HeaderPage from "../components/HeaderPage.vue";
-import GoogleMap from "../components/GoogleMap.vue"
 import api from "../api";
 export default {
   name: "articulo",
@@ -244,7 +240,7 @@ export default {
       articulo: {},
     };
   },
-  components: { HeaderPage, GoogleMap },
+  components: { HeaderPage },
   mounted() {
     api.articulos
       .getOne(this.id)

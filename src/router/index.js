@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Articulos from '../views/Articulos.vue'
 import Articulo from '../views/Articulo.vue'
 import Usuario from '../views/Usuario.vue'
+import Registro from '../views/Registro.vue'
 
 import NewProduct from '../views/NewProduct'
 //store
@@ -62,6 +63,11 @@ const routes = [
     name: 'NewProduct',
     component: NewProduct,
     beforeEnter: ifAuthenticated
+  },
+  {
+    path: '/registro',
+    name: 'registro',
+    component: Registro 
   },
   {
     path: '/articulo/:id',
