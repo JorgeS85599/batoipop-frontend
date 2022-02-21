@@ -6,13 +6,42 @@ import Articulo from '../views/Articulo.vue'
 import Usuario from '../views/Usuario.vue'
 import Registro from '../views/Registro.vue'
 
+import NewProduct from '../views/NewProduct'
+//store
+import store from '../store'
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next({
+    path: '/login',
+    query: { redirect: to.fullPath }
+  })
+}
+
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/articulos',
     name: 'Home',
     component: Articulos
+  },
+  {
+    path: '/articulos/category=:id',
+    name: 'Articulos',
+    component: Articulos,
+    props: true
   },
   {
     path: '/about',
@@ -25,7 +54,15 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter: ifNotAuthenticated
+  },
+
+  {
+    path: '/new-product',
+    name: 'NewProduct',
+    component: NewProduct,
+    beforeEnter: ifAuthenticated
   },
   {
     path: '/registro',

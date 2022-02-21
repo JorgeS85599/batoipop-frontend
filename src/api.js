@@ -30,6 +30,36 @@ const usuarios = {
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
 };
 
+const tags = {
+    getAll: () => axios.get(`${baseURL}/tags`),
+    getPerPage: (page) => axios.get(`${baseURL}/tags?page=${page}`),
+    getOne: (id) => axios.get(`${baseURL}/tags/${id}`),
+    create: (item) => axios.post(`${baseURL}/etags`, item),
+    modify: (item) => axios.put(`${baseURL}/tags/${item.id}`, item),
+    delete: (id) => axios.delete(`${baseURL}/tags/${id}`),
+};
+
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token
+    }
+    return config
+}, (error) => {
+    if (error.config) {
+        switch (error.config.status) {
+            case 401:
+                store.commit('logout')
+                if (router.currentRoute.path !== 'login') {
+                    router.replace({
+                        path: 'login',
+                        query: { redirect: router.currentRoute.path },
+                    })
+                }
+        }
+    }
+    return Promise.reject(error)
+})
 const valoracion = {
     create: (item) => axios.post(`${baseURL}/valoraciones`, item),
 };
@@ -40,6 +70,8 @@ const valoracion = {
 export default {
     articulos,
     categorias,
+    usuarios,
+    tags
     usuarios,
     valoracion
 };

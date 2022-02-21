@@ -20,8 +20,14 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
               <li class="nav-item">
-                <router-link class="nav-link" to="/">Home</router-link>
+                <router-link class="nav-link" to="/articulos">Home</router-link>
               </li>
+              <li class="nav-item" v-if="!$store.getters.isAuthenticated">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+
+              <li class="nav-item" v-else>
+                <a class="nav-link" @click="logout">logout</a>
               <li class="nav-item">
                 <router-link class="nav-link" :to="'/cuenta/'+3">Cuenta</router-link>
               </li>
@@ -54,8 +60,18 @@ export default {
   components: { FooterPage },
   mounted() {
     this.$store.dispatch("loadCategorias");
+    this.$store.dispatch("loadTags");
+
   },
+
+    methods:{
+    logout() {
+      this.$store.commit("logoutUser")
+    }
+  }
 };
+
+
 </script>
 
 
@@ -11960,7 +11976,7 @@ p {
 
 @media (min-width: 768px) {
   section {
-    padding: 9rem 0;
+    padding: 5rem 0;
   }
 }
 .btn-xl {
