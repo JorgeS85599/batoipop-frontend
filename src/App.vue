@@ -22,8 +22,13 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/articulos">Home</router-link>
               </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/login">Login</router-link>
+             
+              <li class="nav-item" v-if="!$store.getters.isAuthenticated">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+
+              <li class="nav-item" v-else>
+                <a class="nav-link" @click="logout">logout</a>
               </li>
 
               <li class="nav-item">
@@ -58,7 +63,15 @@ export default {
     this.$store.dispatch("loadTags");
 
   },
+
+    methods:{
+    logout() {
+      this.$store.commit("logoutUser")
+    }
+  }
 };
+
+
 </script>
 
 
