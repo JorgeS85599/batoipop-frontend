@@ -30,11 +30,16 @@ const usuarios = {
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
 };
 
+const valoracion = {
+    create: (item) => axios.post(`${baseURL}/valoraciones`, item),
+};
+
 
 
 
 export default {
     articulos,
     categorias,
-    usuarios
+    usuarios,
+    valoracion
 };

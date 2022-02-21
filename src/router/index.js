@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Articulos from '../views/Articulos.vue'
 import Articulo from '../views/Articulo.vue'
 import Usuario from '../views/Usuario.vue'
+import Registro from '../views/Registro.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/registro',
+    name: 'registro',
+    component: Registro 
   },
   {
     path: '/articulo/:id',

@@ -23,13 +23,13 @@
                 <router-link class="nav-link" to="/">Home</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" :to="'/cuenta/'+1">Cuenta</router-link>
+                <router-link class="nav-link" :to="'/cuenta/'+3">Cuenta</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link" to="/login">Login</router-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
+                <router-link class="nav-link" to="/registro">Registrate</router-link>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#team">Team</a>

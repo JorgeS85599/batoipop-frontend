@@ -70,10 +70,10 @@
                 </button>
               </div>
               <div class="row down-content portfolio-caption">
-                <div class="col-9" style="display: flex; flex-direction: row">
-                  <div class="col-6">
+                <div class="col-9" style="display: flex; flex-direction: row;background-color:#dbdbdb; border-radius:15px;">
+                  <div class="col-6" style="display: flex; align-content:center ;padding: 8px;">
                     <img
-                      class="img-fluid"
+                      class="img-fluid" style="border-radius:15px;"
                       src="@/assets/img/portfolio/1.jpg"
                       alt="..."
                     />
@@ -140,18 +140,22 @@
         <div
           style="display: flex; justify-content: center; margin-bottom: 25px"
         >
-          <div class="col-9" style="display: flex; flex-direction: row">
+          <div class="col-9" style="display: flex; flex-direction: row; background-color:#dbdbdb; border-radius:15px;">
             <div class="col-lg-1 col-md-2 col-sm-3 col-4">
               <!-- User photo-->
-              <img
-                class="img-fluid"
-                src="@/assets/img/portfolio/1.jpg"
-                alt="..."
-              />
+              <div style="margin-left:14px; margin-top:5px">
+                <img
+                  class="img-fluid"
+                  style="border-radius:5px; "
+                  src="@/assets/img/portfolio/1.jpg"
+                  alt="..."
+                />
+                <p>Name</p>
+              </div>  
             </div>
             <div
               class="col-lg-11 col-md-10 col-sm-9 col-8"
-              style="margin-left: 10px"
+              style="margin-left: 10px;"
             >
               <p>
                 ("Mensaje")Lorem ipsume dolor sit amet, adipisicing elite.
