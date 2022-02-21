@@ -69,106 +69,136 @@
           </div>
         </div>
       </form>
-
-      <div class="dropdown">
-        <button
-          id="btn-price-filter"
-          class="btn dropdown-toggle btn-primary"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Precio
-        </button>
-        <div class="dropdown-menu" style="width: 320px">
-          <form
-            class="px-4 py-3"
-            @submit.prevent="getDataPagina(1)"
-            @reset="reset"
-          >
-            <!--
-            <div class="form-outline mb-4">
-              <vue-slider v-model="value"></vue-slider>
-            </div>
-            -->
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-              <input
-                v-model="rangePrice[0]"
-                type="number"
-                id="form2Example1"
-                class="form-control"
-                step="0.01"
-              />
-              <label class="form-label" for="form2Example1">Desde</label>
-            </div>
-
-            <!-- Password input -->
-            <div class="form-outline mb-4">
-              <input
-                v-model="rangePrice[1]"
-                type="number"
-                id="form2Example2"
-                class="form-control"
-                step="0.01"
-              />
-              <label class="form-label" for="form2Example2">Hasta</label>
-            </div>
-
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block">
-              Aplicar
-            </button>
-            <button type="reset" class="btn btn-danger btn-block">
-              Quitar
-            </button>
-          </form>
+      <div class="filtros">
+        <div style="display: flex; align-item: center; color: white">
+          <p>Filtros:</p>
         </div>
-      </div>
-
-       <div class="dropdown">
-        <button
-          id="btn-price-filter"
-          class="btn dropdown-toggle btn-primary"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Precio
-        </button>
-        <div class="dropdown-menu" style="width: 320px">
-          <form
-            class="px-4 py-3"
-            @submit.prevent="getDataPagina(1)"
-            @reset="reset"
+        <div class="btn-group">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="btn-price-filter"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
           >
-            <!--
-            <div class="form-outline mb-4">
-              <vue-slider v-model="value"></vue-slider>
-            </div>
-            -->
-            <!-- Email input -->
-            <div
-                 v-for="etiqueta in etiquetas"
-                 :key="etiqueta.id" 
-                 >
-              <input
-                v-model="etiqueta.id"
-                type="radio"
-                name="etiqueta"
-                class="form-control"
-              />
-              <label class="form-label" for="etiqueta">{{etiqueta.name}}</label>
-            </div>
+            Precio
+          </button>
+          <div class="dropdown-menu" style="width: 320px">
+           <form
+              class="px-4 py-3"
+              @submit.prevent="getDataPagina(1)"
+              @reset="resetPrice"
+            >
+              <div class="form-outline mb-4">
+                <input
+                  v-model="rangePrice[0]"
+                  type="number"
+                  id="form2Example1"
+                  class="form-control"
+                  step="0.01"
+                />
+                <label class="form-label" for="form2Example1">Desde</label>
+              </div>
 
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block">
-              Aplicar
-            </button>
-            <button type="reset" class="btn btn-danger btn-block">
-              Quitar
-            </button>
-          </form>
+              <div class="form-outline mb-4">
+                <input
+                  v-model="rangePrice[1]"
+                  type="number"
+                  id="form2Example2"
+                  class="form-control"
+                  step="0.01"
+                />
+                <label class="form-label" for="form2Example2">Hasta</label>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">
+                Aplicar
+              </button>
+              <button type="reset" class="btn btn-danger btn-block">
+                Quitar
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="btn-tag-filter"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            Etiquetas
+          </button>
+          <div class="dropdown-menu" style="width: 320px">
+            <form
+              class="px-4 py-3"
+              @submit.prevent="getDataPagina(1)"
+              @reset="resetTag"
+            >
+              <div v-for="etiqueta in etiquetas" :key="etiqueta.id">
+                <input
+                  v-model="etiquetaId"
+                  type="radio"
+                  name="etiqueta"
+                  :value="etiqueta.id"
+                />
+                <label for="etiqueta">{{ etiqueta.name }}</label>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">
+                Aplicar
+              </button>
+              <button type="reset" class="btn btn-danger btn-block">
+                Quitar
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="btn-distance-filter"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            Distancia
+          </button>
+          <div class="dropdown-menu" style="width: 320px">
+            <form
+              class="px-4 py-3"
+              @submit.prevent="getDataPagina(1)"
+              @reset="resetDistance"
+            >
+              <div>
+                <GoogleMap v-on:sendLocation="saveLocation" />
+                <label for="distancia" class="form-label"
+                  >Distancia (km)
+                </label>
+                <input
+                  type="number"
+                  v-model="distancia"
+                  id="distancia"
+                  class="form-control"
+                  step="0.01"
+                />
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">
+                Aplicar
+              </button>
+              <button type="reset" class="btn btn-danger btn-block">
+                Quitar
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -275,6 +305,7 @@
 <script>
 import ProductoVue from "../components/ProductoVue.vue";
 import HeaderPage from "../components/HeaderPage.vue";
+import GoogleMap from "../components/GoogleMap.vue";
 /*
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/material.css";
@@ -283,7 +314,7 @@ import api from "../api";
 export default {
   name: "articulos",
   props: ["id"],
-  components: { ProductoVue, HeaderPage /*VueSlider*/ },
+  components: { ProductoVue, HeaderPage, GoogleMap },
   data() {
     return {
       articulos: [],
@@ -294,6 +325,10 @@ export default {
       options: ["A", "B", "C"],
       value1: "B",
       rangePrice: [],
+      etiquetaId: 0,
+      distancia: 0,
+      longitud: 0,
+      latitud: 0,
     };
   },
   methods: {
@@ -303,7 +338,9 @@ export default {
         .getPerPage(numPagina, this.filtro)
         .then((response) => (this.articulos = response.data))
         .catch((error) => alert(error));
-      this.changeColorButton();
+      this.changeColorButtonPrice();
+      this.changeColorButtonTag();
+      this.changeColorButtonDistance();
     },
     getPreviousPage() {
       if (this.paginaActual > 1) {
@@ -326,11 +363,21 @@ export default {
     isActiveCategory(index) {
       return index == 1 ? "active" : " ";
     },
-    reset() {
+    resetPrice() {
       this.rangePrice = [];
       this.getDataPagina(1);
     },
-    changeColorButton() {
+    resetTag() {
+      this.etiquetaId = 0;
+      this.getDataPagina(1);
+    },
+    resetDistance() {
+      this.distancia = 0;
+      this.latitud = 0;
+      this.longitud = 0;
+      this.getDataPagina(1);
+    },
+    changeColorButtonPrice() {
       if (!this.rangePrice.length) {
         document
           .getElementById("btn-price-filter")
@@ -346,6 +393,40 @@ export default {
           .getElementById("btn-price-filter")
           .classList.remove("btn-primary");
       }
+    },
+    changeColorButtonTag() {
+      if (!this.etiquetaId) {
+        document.getElementById("btn-tag-filter").classList.add("btn-primary");
+        document
+          .getElementById("btn-tag-filter")
+          .classList.remove("btn-warning");
+      } else {
+        document.getElementById("btn-tag-filter").classList.add("btn-warning");
+        document
+          .getElementById("btn-tag-filter")
+          .classList.remove("btn-primary");
+      }
+    },
+    changeColorButtonDistance() {
+      if (!this.latitud || !this.longitud || !this.distancia) {
+        document
+          .getElementById("btn-distance-filter")
+          .classList.add("btn-primary");
+        document
+          .getElementById("btn-distance-filter")
+          .classList.remove("btn-warning");
+      } else {
+        document
+          .getElementById("btn-distance-filter")
+          .classList.add("btn-warning");
+        document
+          .getElementById("btn-distance-filter")
+          .classList.remove("btn-primary");
+      }
+    },
+    saveLocation(location) {
+      this.latitud = location.lat;
+      this.longitud = location.lng;
     },
   },
   mounted() {
@@ -373,6 +454,20 @@ export default {
         tmpFiltro +=
           "price1=" + this.rangePrice[0] + "&price2=" + this.rangePrice[1];
       }
+      if (this.etiquetaId) {
+        if (tmpFiltro) tmpFiltro += "&";
+        tmpFiltro += "tag_id=" + this.etiquetaId;
+      }
+      if (this.latitud && this.longitud && this.distancia) {
+        if (tmpFiltro) tmpFiltro += "&";
+        tmpFiltro +=
+          "latitud=" +
+          this.latitud +
+          "&longitud=" +
+          this.longitud +
+          "&distancia=" +
+          this.distancia;
+      }
       return tmpFiltro;
     },
     nomCategoria() {
@@ -391,4 +486,15 @@ export default {
 </script>
 
 <style scoped>
+.filtros {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.filtros > * {
+  margin-left: 15px;
+}
 </style>

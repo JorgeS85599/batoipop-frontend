@@ -70,7 +70,7 @@
                 </button>
               </div>
               <div class="row down-content portfolio-caption">
-                <div class="col-9" style="display: flex; flex-direction: row">
+                <div class="col-9" style="display: flex; flex-direction: row; backgroud-color:#f6f6f6f">
                   <div class="col-6">
                     <img
                       class="img-fluid"
@@ -136,6 +136,11 @@
             </table>
           </div>
         </div>
+      </div>
+    </section>
+    <section class="page-section">
+      <div>
+          <GoogleMap :latitud="this.articulo.latitud" :longitud="this.articulo.longitud"/>
       </div>
     </section>
     <section class="page-section">
@@ -234,6 +239,7 @@
 
 <script>
 import HeaderPage from "../components/HeaderPage.vue";
+import GoogleMap from "../components/GoogleMap.vue"
 import api from "../api";
 export default {
   name: "articulo",
@@ -243,7 +249,7 @@ export default {
       articulo: {},
     };
   },
-  components: { HeaderPage },
+  components: { HeaderPage, GoogleMap },
   mounted() {
     api.articulos
       .getOne(this.id)

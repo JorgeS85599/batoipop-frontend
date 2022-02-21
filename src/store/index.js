@@ -14,13 +14,13 @@ export default new Vuex.Store({
     nomCategoryById: (state) => (id) => {
       const categoria = state.categorias.find((item) => item.id == id)
       if (categoria) return categoria.name
-      return 'Desconocido'
+      return ''
     },
 
     descriptionCategoryById: (state) => (id) => {
       const categoria = state.categorias.find((item) => item.id == id)
       if (categoria) return categoria.desc
-      return 'Desconocido'
+      return ''
     }
 
   },
