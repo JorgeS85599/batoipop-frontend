@@ -1,10 +1,14 @@
 import axios from 'axios'
+import store from './store';
+import router from './router'
 
 const baseURL = 'http://laravel.my/api';
 
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+
 const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
-    getPerPage: (page) => axios.get(`${baseURL}/articles?page=${page}`),
+    getPerPage: (page,filter) => axios.get(`${baseURL}/articles?page=${page}&${filter}`),
     getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articles?page=${page}&owner_id=${id}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
@@ -28,13 +32,52 @@ const usuarios = {
     create: (item) => axios.post(`${baseURL}/users`, item),
     modify: (item) => axios.put(`${baseURL}/users/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
+    login: (item) =>axios.post(`${baseURL}/login`,item),
+    //login baerer
+    user: () => axios.get(`${baseURL}/user`,{
+        headers:{
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    }),
+    
 };
 
+const tags = {
+    getAll: () => axios.get(`${baseURL}/tags`),
+    getPerPage: (page) => axios.get(`${baseURL}/tags?page=${page}`),
+    getOne: (id) => axios.get(`${baseURL}/tags/${id}`),
+    create: (item) => axios.post(`${baseURL}/etags`, item),
+    modify: (item) => axios.put(`${baseURL}/tags/${item.id}`, item),
+    delete: (id) => axios.delete(`${baseURL}/tags/${id}`),
+};
+
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token
+    }
+    return config
+}, (error) => {
+    if (error.config) {
+        switch (error.config.status) {
+            case 401:
+                store.commit('logout')
+                if (router.currentRoute.path !== 'login') {
+                    router.replace({
+                        path: 'login',
+                        query: { redirect: router.currentRoute.path },
+                    })
+                }
+        }
+    }
+    return Promise.reject(error)
+})
 
 
 
 export default {
     articulos,
     categorias,
-    usuarios
+    usuarios,
+    tags
 };
