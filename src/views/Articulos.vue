@@ -336,7 +336,7 @@ export default {
       this.paginaActual = numPagina;
       api.articulos
         .getPerPage(numPagina, this.filtro)
-        .then((response) => (this.articulos = response.data))
+        .then((response) => (this.articulos = response.data.data))
         .catch((error) => alert(error));
       this.changeColorButtonPrice();
       this.changeColorButtonTag();

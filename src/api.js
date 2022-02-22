@@ -31,6 +31,8 @@ const usuarios = {
     create: (item) => axios.post(`${baseURL}/users`, item),
     modify: (item) => axios.put(`${baseURL}/users/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/users/${id}`),
+    login: (itme) => axios.post(`${baseURL}/login`,item),
+
 };
 
 const tags = {
