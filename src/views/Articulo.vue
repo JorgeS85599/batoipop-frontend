@@ -234,7 +234,7 @@ export default {
   mounted() {
     api.articulos
       .getOne(this.id)
-      .then((response) => (this.articulo = response.data))
+      .then((response) => (this.articulo = response.data.data))
       .catch((error) => alert(error));
   },
   methods: {
