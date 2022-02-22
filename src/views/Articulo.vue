@@ -56,8 +56,8 @@
                 </button>
               </div>
               <div class="row down-content portfolio-caption">
-                <div class="col-9" style="display: flex; flex-direction: row; backgroud-color:#f6f6f6f">
-                  <div class="col-6">
+                <div class="col-9" style="display: flex; flex-direction: row;background-color:#dbdbdb; border-radius:15px;">
+                  <div class="col-6" style="display: flex; align-content:center ;padding: 8px;">
                     <img
                       class="img-fluid"
                       src="@/assets/img/portfolio/1.jpg"
@@ -65,10 +65,7 @@
                     />
                   </div>
                   <div class="col-6">
-                    <div
-                      class="row"
-                      style="display: flex; justify-content: flex-start"
-                    >
+                    <div class="row " style="display: flex; justify-content: flex-start">
                       <p class="portfolio-caption-heading">
                         {{ this.articulo.owner.name }}
                       </p>
@@ -158,10 +155,7 @@
             Lorem ipsum dolor sit amet consectetur.
           </h3>
         </div>
-
-    <ValidationObserver v-slot="{ handleSubmit }">
-
-        <form id="contactForm" data-sb-form-api-token="API_TOKEN"  @submit.prevent="handleSubmit(saveMensaje)">
+        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
           <div
             class="row align-items-stretch mb-5"
             style="display: flex; justify-content: center"
@@ -169,20 +163,19 @@
             <div class="col-md-9">
               <div class="form-group form-group-textarea mb-md-0">
                 <!-- Message input-->
-                 <validation-provider
-            rules="required|min:5|max:150"
-            v-slot="{ errors }"
-          >
                 <textarea
                   class="form-control"
                   id="message"
                   placeholder="Your Message"
                   style="resize: none"
                   data-sb-validations="required"
-                  v-model="mensaje.message"
                 ></textarea>
-                <span class="text-danger">{{errors[0]}}</span>
-                 </validation-provider>
+                <div
+                  class="invalid-feedback"
+                  data-sb-feedback="message:required"
+                >
+                  A message is required.
+                </div>
               </div>
             </div>
           </div>
@@ -212,7 +205,7 @@
           <!-- Submit Button-->
           <div class="text-center">
             <button
-              class="btn btn-primary btn-xl text-uppercase"
+              class="btn btn-primary btn-xl text-uppercase disabled"
               id="submitButton"
               type="submit"
             >
@@ -220,40 +213,24 @@
             </button>
           </div>
         </form>
-    </ValidationObserver>
-
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { extend } from "vee-validate";
-import { required, min, max} from "vee-validate/dist/rules";
-import es from "vee-validate/dist/locale/es.json";
-import { localize } from "vee-validate";
-localize("es", es);
-
-extend("required", required);
-extend("max", max);
-extend("min", min);
-
-
 import HeaderPage from "../components/HeaderPage.vue";
 import GoogleMap from "../components/GoogleMap.vue"
 import api from "../api";
-import router from '../router';
 export default {
   name: "articulo",
   props: ["id"],
   data() {
     return {
       articulo: {},
-      mensaje: {}
     };
   },
-  components: { HeaderPage, GoogleMap,ValidationProvider,ValidationObserver },
+  components: { HeaderPage, GoogleMap },
   mounted() {
     api.articulos
       .getOne(this.id)
@@ -272,20 +249,6 @@ export default {
       });
       return etiquetas;
     },
-    saveMensaje() {
-      if(!this.$store.getters.isAuthenticated){
-        router.push({
-    path: '/login',
-    query: { redirect: 'articulo/'+ this.id}
-  })
-      } else{
-      this.mensaje.id_article = this.id
-      api.mensajes
-      .create(this.mensaje)
-      .then((response) => this.articulo.messages.push(response.data))
-      .catch((error) => alert(error));
-    }
-    }
   },
 };
 </script>

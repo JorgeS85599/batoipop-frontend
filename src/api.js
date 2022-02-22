@@ -9,6 +9,7 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getIte
 const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
     getPerPage: (page,filter) => axios.get(`${baseURL}/articles?page=${page}&${filter}`),
+    getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articles?page=${page}&owner_id=${id}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
@@ -78,6 +79,10 @@ axios.interceptors.request.use((config) => {
     }
     return Promise.reject(error)
 })
+const valoracion = {
+    create: (item) => axios.post(`${baseURL}/valoraciones`, item),
+};
+
 
 
 
@@ -87,4 +92,5 @@ export default {
     usuarios,
     tags,
     mensajes,
+    valoracion
 };

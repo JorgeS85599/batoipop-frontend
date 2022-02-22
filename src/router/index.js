@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Articulos from '../views/Articulos.vue'
 import Articulo from '../views/Articulo.vue'
+import Usuario from '../views/Usuario.vue'
 
 import NewProduct from '../views/NewProduct'
 //store
@@ -66,6 +67,12 @@ const routes = [
     path: '/articulo/:id',
     name: 'Articulo',
     component: Articulo,
+    props: true
+  },
+  {
+    path: '/cuenta/:id',
+    name: 'Cuenta',
+    component: Usuario,
     props: true
   },
 ]
