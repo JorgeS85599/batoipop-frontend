@@ -138,12 +138,12 @@ export default {
       if (this.ifEdit) {
         api.articulos
           .modify(this.product)
-          .then(() => this.$router.push("/articulos/" + this.product.id))
+          .then((response) => this.$router.push("/articulo/" + response.id))
           .catch((error) => alert(error));
       } else {
         api.articulos
           .create(this.product)
-          .then(() => this.$router.push("/articulos/" + this.product.id))
+          .then((response) => this.$router.push("/articulo/" + response.data.id))
           .catch((error) => alert(error));
       }
     },

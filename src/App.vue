@@ -28,8 +28,8 @@
 
               <li class="nav-item" v-else>
                 <a class="nav-link" @click="logout">logout</a>
-              <li class="nav-item">
-                <router-link class="nav-link" :to="'/cuenta/'+3">Cuenta</router-link>
+              <li class="nav-item" v-if="$store.getters.isAuthenticated">
+                <router-link class="nav-link" :to="'/cuenta/'+$store.state.user.id">Cuenta</router-link>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#team">Team</a>
@@ -53,6 +53,12 @@ import FooterPage from "@/components/FooterPage";
 export default {
   components: { FooterPage },
   mounted() {
+    if(localStorage.user){
+      this.$store.commit("loginUser",{
+        token:localStorage.token,
+        user:JSON.parse(localStorage.user)
+      })
+    }
     this.$store.dispatch("loadCategorias");
     this.$store.dispatch("loadTags");
 
