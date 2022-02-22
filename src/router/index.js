@@ -31,7 +31,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/articulos',
+    path: '/',
     name: 'Home',
     component: Articulos
   },

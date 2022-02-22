@@ -50,6 +50,13 @@ const tags = {
     delete: (id) => axios.delete(`${baseURL}/tags/${id}`),
 };
 
+const mensajes = {
+    getAllArticle: (id) => axios.get(`${baseURL}/messages?article_id=${id}`),
+    create: (item) => axios.post(`${baseURL}/messages`, item),
+    modify: (item) => axios.put(`${baseURL}/messages/${item.id}`, item),
+    delete: (id) => axios.delete(`${baseURL}/messages/${id}`),
+};
+
 axios.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -78,5 +85,6 @@ export default {
     articulos,
     categorias,
     usuarios,
-    tags
+    tags,
+    mensajes,
 };
