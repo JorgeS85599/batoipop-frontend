@@ -1,4 +1,6 @@
 import axios from 'axios'
+import store from './store'
+import router from './router'
 
 const baseURL = 'http://laravel.my/api';
 
@@ -71,7 +73,6 @@ export default {
     articulos,
     categorias,
     usuarios,
-    tags
-    usuarios,
+    tags,
     valoracion
 };
