@@ -1,8 +1,8 @@
 import axios from 'axios'
-import store from './store';
+import store from './store'
 import router from './router'
 
-const baseURL = 'http://batoipop.my/api';
+const baseURL = 'http://laravel.my/api';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 
@@ -39,7 +39,7 @@ const usuarios = {
             Authorization: 'Bearer ' + localStorage.getItem('token')
         }
     }),
-    
+
 };
 
 const tags = {

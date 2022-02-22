@@ -10,7 +10,7 @@ export default new Vuex.Store({
     categorias: [],
     tags: [],
     user: {},
-    token: localStorage.token
+    token: ""
   },
   getters: {
 
@@ -40,12 +40,13 @@ export default new Vuex.Store({
       state.token = token.token
       state.user = token.user
       localStorage.token = token.token
-      localStorage.idUser = token.user.id
+      localStorage.user = JSON.stringify(token.user)
     },
     logoutUser(state) {
       state.token = null
       localStorage.removeItem('token')
       state.user = {}
+      localStorage.removeItem('user')
     },
   },
   actions: {
