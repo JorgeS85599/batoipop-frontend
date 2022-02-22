@@ -22,24 +22,10 @@
                 data-bs-ride="carousel"
               >
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
+                  <div class="carousel-item" v-for="(photo,index) in this.articulo.photos" :key="photo.id" v-bind:class="index==0?'active':''">
                     <img
                       class="img-fluid"
-                      src="@/assets/img/portfolio/1.jpg"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      class="img-fluid"
-                      src="@/assets/img/portfolio/1.jpg"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="carousel-item">
-                    <img
-                      class="img-fluid"
-                      src="@/assets/img/portfolio/1.jpg"
+                      :src="'http://batoipop.my/' + photo.image"
                       alt="..."
                     />
                   </div>
@@ -85,14 +71,14 @@
                       </p>
                       <ul class="stars">
                         <li
-                          v-for="star in this.articulo.valoration"
-                          :key="star"
+                          v-for="(star,index) in this.articulo.valoration"
+                          :key="'st'+index"
                         >
                           <i class="bi bi-star-fill" style="color: #f3da35"></i>
                         </li>
                         <li
-                          v-for="cowStar in 5 - this.articulo.valoration"
-                          :key="cowStar"
+                          v-for="(cowStar,index) in 5 - this.articulo.valoration"
+                          :key="index"
                         >
                           <i class="bi bi-star" style="color: #f3da35"></i>
                         </li>
@@ -136,11 +122,16 @@
       </div>
     </section>
     <section class="page-section">
+      <div>
+          <GoogleMap :latitud="this.articulo.latitud" :longitud="this.articulo.longitud"/>
+      </div>
+    </section>
+    <section class="page-section">
       <div class="container">
         <div
           style="display: flex; justify-content: center; margin-bottom: 25px"
         >
-          <div class="col-9" style="display: flex; flex-direction: row">
+          <div v-for="message in this.articulo.messages" :key="message.id" class="col-9" style="display: flex; flex-direction: row">
             <div class="col-lg-1 col-md-2 col-sm-3 col-4">
               <!-- User photo-->
               <img
@@ -148,15 +139,13 @@
                 src="@/assets/img/portfolio/1.jpg"
                 alt="..."
               />
+              <p>{{message.usuarioEmisor}}</p>
             </div>
             <div
               class="col-lg-11 col-md-10 col-sm-9 col-8"
               style="margin-left: 10px"
             >
-              <p>
-                ("Mensaje")Lorem ipsume dolor sit amet, adipisicing elite.
-                Itaque, corporis nulla aspernatur.
-              </p>
+              <p>{{message.message}}</p>
             </div>
           </div>
         </div>
@@ -231,6 +220,7 @@
 
 <script>
 import HeaderPage from "../components/HeaderPage.vue";
+import GoogleMap from "../components/GoogleMap.vue"
 import api from "../api";
 export default {
   name: "articulo",
@@ -240,11 +230,11 @@ export default {
       articulo: {},
     };
   },
-  components: { HeaderPage },
+  components: { HeaderPage, GoogleMap },
   mounted() {
     api.articulos
       .getOne(this.id)
-      .then((response) => (this.articulo = response.data))
+      .then((response) => (this.articulo = response.data.data))
       .catch((error) => alert(error));
   },
   methods: {
@@ -263,5 +253,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
