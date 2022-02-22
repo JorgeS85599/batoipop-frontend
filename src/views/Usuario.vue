@@ -204,7 +204,7 @@ export default {
       this.paginaActual = numPagina;
       api.articulos
         .getArticleUserPerPage(numPagina, this.id)
-        .then((response) => (this.articulos = response.data))
+        .then((response) => (this.articulos = response.data.data))
         .catch((error) => alert(error));
     },
     newValoratio(){
