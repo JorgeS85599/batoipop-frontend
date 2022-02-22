@@ -35,9 +35,6 @@
                 <router-link class="nav-link" to="/login">Login</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/registro">Registrate</router-link>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="#team">Team</a>
               </li>
               <li class="nav-item">

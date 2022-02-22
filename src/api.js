@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from './store'
 import router from './router'
 
+
 const baseURL = 'http://laravel.my/api';
 
 const articulos = {
