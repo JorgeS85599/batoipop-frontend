@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <h1>{{ ifEdit ? "Editar producto" : "Añadir producto" }}</h1>
     <ValidationObserver v-slot="{ handleSubmit }">
       <form novalidate @submit.prevent="handleSubmit(addProduct)">
