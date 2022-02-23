@@ -7,13 +7,6 @@
           Lorem ipsum dolor sit amet consectetur.
         </h3>
       </div>
-      <!-- * * * * * * * * * * * * * * *-->
-      <!-- * * SB Forms Contact Form * *-->
-      <!-- * * * * * * * * * * * * * * *-->
-      <!-- This form is pre-integrated with SB Forms.-->
-      <!-- To make this form functional, sign up at-->
-      <!-- https://startbootstrap.com/solution/contact-forms-->
-      <!-- to get an API token!-->
       
 
       <div class="row">
