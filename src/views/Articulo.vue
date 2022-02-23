@@ -293,7 +293,7 @@ export default {
       articulo: {},
       reportA: {},
       reportM:{},
-      messageBuy: {}
+      messageBuy: {},
       mensaje: {},
     };
   },
