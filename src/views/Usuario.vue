@@ -31,13 +31,17 @@
                   >
                     <p class="portfolio-caption-heading">Puntuación</p>
                     <ul class="stars">
-                    <li v-for="(star,index) in user.valoration" :key="index">
+                    <li
+                          v-for="(star,index) in user.valoration"
+                          :key="'st'+index"
+                        >
                         <i
                           class="bi bi-star-fill"
                           style="color: #f3da35; font-size: 25px"
                         ></i>
                       </li> 
-                      <li v-for="cowStar in user.valoration" :key="cowStar">
+                      <li v-for="(cowStar,index) in 5 - user.valoration"
+                          :key="index">
                         <i
                           class="bi bi-star"
                           style="color: #f3da35; font-size: 25px"
@@ -55,17 +59,20 @@
     <div class="page-section">
       <div class="container" style="display: flex; margin-bottom: 25px">
         <div style="margin-right: 5px">
-          <button @click="ocultarDiv(1,3,2)" type="button" class="btn btn-outline-warning">
-            Productos en venta
+          <button @click="ocultarDiv(1,3,2,4)" type="button" class="btn btn-outline-warning">
+            Productos
           </button>
         </div>
         <div style="margin-right: 5px">
-          <button @click="ocultarDiv(2,1,3)" type="button" class="btn btn-outline-warning">
+          <button @click="ocultarDiv(2,1,3,4)" type="button" class="btn btn-outline-warning">
             Comentarios
           </button>
         </div>
+        <div v-if="id == $store.state.user.id" style="margin-right: 5px">
+          <button @click="ocultarDiv(4,1,2,3)" type="button" class="btn btn-outline-warning">Comprados</button>
+        </div>
         <div style="margin-right: 5px">
-          <button @click="ocultarDiv(3,1,2)" type="button" class="btn btn-outline-warning">Valorar</button>
+          <button @click="ocultarDiv(3,1,2,4)" type="button" class="btn btn-outline-warning">Valorar</button>
         </div>
       </div>
       <div id="view-1" class="ocultar">
@@ -90,6 +97,46 @@
                 </li>
                 <li
                     v-for="pagina in articulos.last_page"
+                    :key="pagina"
+                    v-on:click="getDataPagina(pagina)"
+                    v-bind:class="isActivePage(pagina)"
+                    class="page-item"
+                >
+                    <a class="page-link" href="#">{{ pagina }}</a>
+                </li>
+                <li v-on:click="getNextPage()" class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Siguiente</span>
+                    </a>
+                </li>
+                </ul>
+            </nav>
+            </div>
+        </div>
+     </div>
+     <div id="view-4" class="ocultar">
+        <div class="page-section bg-light" id="portfolio">
+            <div class="container">
+            <div class="row">
+                <producto-vue
+                v-for="articuloBuy in articulosBuy.data"
+                :key="articuloBuy.id"
+                :articulo="articuloBuy"
+                ></producto-vue>
+            </div>
+            </div>
+            <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                <li v-on:click="getPreviousPage()" class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                    </a>
+                </li>
+                <li
+                    v-for="pagina in articulosBuy.last_page"
                     :key="pagina"
                     v-on:click="getDataPagina(pagina)"
                     v-bind:class="isActivePage(pagina)"
@@ -153,7 +200,7 @@
           </div>
           <div style="display: flex;justify-content: center;flex-direction: column;margin-bottom: 25px;align-items: center;">
           <div v-for="valoracion in user.valorationsUser" :key="valoracion.id" class="col-9" style="display: flex; flex-direction: row; background-color:#dbdbdb; border-radius:15px;margin-top:15px">
-            <div class="col-lg-1 col-md-2 col-sm-3 col-4">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-4">
               <div style="margin-left:14px; margin-top:5px">
                 <img
                   class="img-fluid"
@@ -165,7 +212,7 @@
               </div>  
             </div> 
             <div
-              class="col-lg-11 col-md-10 col-sm-9 col-8"
+              class="col-lg-10 col-md-10 col-sm-9 col-8"
               style="margin-left: 10px;"
             >
               <p>
@@ -189,22 +236,29 @@ export default {
     return {
       user: { valoration: 0 },
       articulos: {},
+      articulosBuy: {},
       paginaActual: 1,
       newValoracion:{id_user_emissor:4,id_user_receptor:this.id},
     };
   },
   methods: {
     
-    ocultarDiv(id1,id2,id3){
+    ocultarDiv(id1,id2,id3,id4){
         document.querySelector('#view-'+id1).classList.remove('ocultar')
         document.querySelector('#view-'+id2).classList.add('ocultar')
         document.querySelector('#view-'+id3).classList.add('ocultar')
+        document.querySelector('#view-'+id4).classList.add('ocultar')
     },
     getDataUserPagina(numPagina) {
       this.paginaActual = numPagina;
       api.articulos
         .getArticleUserPerPage(numPagina, this.id)
         .then((response) => (this.articulos = response.data.data))
+        .catch((error) => alert(error));
+
+      api.articulos
+        .getArticleUserBuy(numPagina, this.id)
+        .then((response) => (this.articulosBuy = response.data.data))
         .catch((error) => alert(error));
     },
     newValoratio(){
@@ -236,7 +290,7 @@ export default {
     api.usuarios
       .getOne(this.id)
       .then((response) => (this.user = response.data))
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   },
   computed: {
     categorias() {
