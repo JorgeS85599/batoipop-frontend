@@ -1,7 +1,7 @@
 <template>
   <div>
     <header-page></header-page>
-
+    
     <!-- Portfolio Grid-->
     <section class="page-section bg-light" id="portfolio">
       <div class="container">
@@ -22,12 +22,7 @@
                 data-bs-ride="carousel"
               >
                 <div class="carousel-inner">
-                  <div
-                    class="carousel-item"
-                    v-for="(photo, index) in this.articulo.photos"
-                    :key="photo.id"
-                    v-bind:class="index == 0 ? 'active' : ''"
-                  >
+                  <div class="carousel-item" v-for="(photo,index) in this.articulo.photos" :key="photo.id" v-bind:class="index==0?'active':''">
                     <img
                       class="img-fluid"
                       :src="'http://batoipop.my/' + photo.image"
@@ -61,19 +56,8 @@
                 </button>
               </div>
               <div class="row down-content portfolio-caption">
-                <div
-                  class="col-9"
-                  style="
-                    display: flex;
-                    flex-direction: row;
-                    background-color: #dbdbdb;
-                    border-radius: 15px;
-                  "
-                >
-                  <div
-                    class="col-6"
-                    style="display: flex; align-content: center; padding: 8px"
-                  >
+                <div class="col-9" style="display: flex; flex-direction: row;background-color:#dbdbdb; border-radius:15px;">
+                  <div class="col-6" style="display: flex; align-content:center ;padding: 8px;">
                     <img
                       class="img-fluid"
                       src="@/assets/img/portfolio/1.jpg"
@@ -81,23 +65,19 @@
                     />
                   </div>
                   <div class="col-6">
-                    <div
-                      class="row"
-                      style="display: flex; justify-content: flex-start"
-                    >
+                    <div class="row " style="display: flex; justify-content: flex-start">
                       <p class="portfolio-caption-heading">
                         {{ this.articulo.owner.name }}
                       </p>
                       <ul class="stars">
                         <li
-                          v-for="(star, index) in this.articulo.valoration"
-                          :key="'st' + index"
+                          v-for="(star,index) in this.articulo.valoration"
+                          :key="'st'+index"
                         >
                           <i class="bi bi-star-fill" style="color: #f3da35"></i>
                         </li>
                         <li
-                          v-for="(cowStar, index) in 5 -
-                          this.articulo.valoration"
+                          v-for="(cowStar,index) in 5 - this.articulo.valoration"
                           :key="index"
                         >
                           <i class="bi bi-star" style="color: #f3da35"></i>
@@ -143,10 +123,7 @@
     </section>
     <section class="page-section">
       <div>
-        <GoogleMap
-          :latitud="this.articulo.latitud"
-          :longitud="this.articulo.longitud"
-        />
+          <GoogleMap :latitud="this.articulo.latitud" :longitud="this.articulo.longitud"/>
       </div>
     </section>
     <section class="page-section">
@@ -154,12 +131,7 @@
         <div
           style="display: flex; justify-content: center; margin-bottom: 25px"
         >
-          <div
-            v-for="message in this.articulo.messages"
-            :key="message.id"
-            class="col-9"
-            style="display: flex; flex-direction: row"
-          >
+          <div v-for="message in this.articulo.messages" :key="message.id" class="col-9" style="display: flex; flex-direction: row">
             <div class="col-lg-1 col-md-2 col-sm-3 col-4">
               <!-- User photo-->
               <img
@@ -167,13 +139,58 @@
                 src="@/assets/img/portfolio/1.jpg"
                 alt="..."
               />
-              <p>{{ message.usuarioEmisor }}</p>
+              <p>{{message.usuarioEmisor}}</p>
             </div>
             <div
               class="col-lg-11 col-md-10 col-sm-9 col-8"
               style="margin-left: 10px"
             >
-              <p>{{ message.message }}</p>
+             <p>{{message.message}}</p>
+            </div>
+          </div>
+
+          <div class="modal fade" id="exampleModalR" tabindex="-1" aria-labelledby="exampleModalLabelR" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <div v-if="this.$store.getters.isAuthenticated">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reportar mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <ValidationObserver v-slot="{ handleSubmit }">
+                    <form @submit.prevent="handleSubmit(reportMessage)">
+                      <div class="modal-body">
+
+                        <div class="form-group form-group-textarea mb-md-0">
+                          <validation-provider
+                              rules="required|min:5|max:150"
+                              v-slot="{ errors }"
+                          >
+                            <label>comentario </label>
+                            <textarea
+                                class="form-control"
+                                placeholder="Your Message"
+                                style="resize: none"
+                                v-model="reportM.reportComent"
+                                name="comentario"
+                            ></textarea>
+                            <span class="text-danger">{{ errors[0] }}</span>
+                          </validation-provider>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                      </div>
+                    </form>
+                  </ValidationObserver>
+                </div>
+                <div v-else>
+                  <h2>Tienes que estar login para relizar esta acción</h2>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -266,7 +283,7 @@ extend("min", min);
 
 import router from "../router";
 import HeaderPage from "../components/HeaderPage.vue";
-import GoogleMap from "../components/GoogleMap.vue";
+import GoogleMap from "../components/GoogleMap.vue"
 import api from "../api";
 export default {
   name: "articulo",
@@ -274,6 +291,9 @@ export default {
   data() {
     return {
       articulo: {},
+      reportA: {},
+      reportM:{},
+      messageBuy: {}
       mensaje: {},
     };
   },
@@ -285,6 +305,54 @@ export default {
       .catch((error) => alert(error));
   },
   methods: {
+    reportArticle()
+    {
+      if (!this.$store.getters.isAuthenticated) {
+        router.push({
+          path: "/login",
+          query: {redirect: "articulo/" + this.id},
+        });
+      } else {
+        this.reportA.article = this.id
+        api.reportArticle
+            .create(this.reportA)
+            .then((response) => [console.log(response.data.status), this.reportA={} ])
+            .catch((error) => alert(error));
+      }
+    },
+
+    reportMessage()
+    {
+      if (!this.$store.getters.isAuthenticated) {
+        router.push({
+          path: "/login",
+          query: {redirect: "articulo/" + this.id},
+        });
+      } else {
+        console.log(this.reportM.message)
+        api.reportMessage
+            .create(this.reportM)
+            .then((response) => [console.log(response.data.status), this.reportM={} ])
+            .catch((error) => alert(error));
+      }
+    },
+
+    buyArticle(){
+      this.messageBuy.article = this.id
+      if (!this.$store.getters.isAuthenticated) {
+        router.push({
+          path: "/login",
+          query: {redirect: "articulo/" + this.id},
+        });
+      } else {
+        this.messageBuy.article = this.id
+        api.mensajes
+            .buyArticle(this.messageBuy)
+            .then((response) => [console.log(response.data.status), this.messageBuy={} ])
+            .catch((error) => alert(error));
+      }
+    },
+
     getTagsName() {
       let etiquetas = "";
       this.articulo.tags.forEach((tagElement, index) => {

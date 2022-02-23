@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from './store';
+import store from './store'
 import router from './router'
 
 const baseURL = 'http://batoipop.my/api';
@@ -10,6 +10,7 @@ const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
     getPerPage: (page,filter) => axios.get(`${baseURL}/articles?page=${page}&${filter}`),
     getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articles?page=${page}&owner_id=${id}`),
+    getArticleUserBuy: (page,id) => axios.get(`${baseURL}/articles?page=${page}&buyer_id=${id}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
@@ -39,7 +40,7 @@ const usuarios = {
             Authorization: 'Bearer ' + localStorage.getItem('token')
         }
     }),
-    
+
 };
 
 const tags = {
@@ -56,6 +57,8 @@ const mensajes = {
     create: (item) => axios.post(`${baseURL}/messages`, item),
     modify: (item) => axios.put(`${baseURL}/messages/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/messages/${id}`),
+    buyArticle: (item) => axios.post(`${baseURL}/buy-message`, item),
+
 };
 
 axios.interceptors.request.use((config) => {
@@ -83,6 +86,14 @@ const valoracion = {
     create: (item) => axios.post(`${baseURL}/valoraciones`, item),
 };
 
+const reportArticle = {
+    create: (item) => axios.post(`${baseURL}/reportArticles`, item),
+};
+
+const reportMessage = {
+    create: (item) => axios.post(`${baseURL}/reportMessage`, item),
+};
+
 
 
 
@@ -92,5 +103,7 @@ export default {
     usuarios,
     tags,
     mensajes,
-    valoracion
+    valoracion,
+    reportArticle,
+    reportMessage
 };

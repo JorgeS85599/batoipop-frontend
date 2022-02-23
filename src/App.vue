@@ -22,6 +22,9 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/">Home</router-link>
               </li>
+              <li class="nav-item" v-if="$store.getters.isAuthenticated">
+                <router-link class="nav-link" :to="'/cuenta/'+$store.state.user.id">Cuenta</router-link>
+              </li>
               <li class="nav-item" v-if="!$store.getters.isAuthenticated">
                 <a class="nav-link" href="/login">Login</a>
               </li>
@@ -30,11 +33,6 @@
                 <a class="nav-link" @click="logout">logout</a>
               </li>
 
-              <li class="nav-item">
-                <router-link class="nav-link" :to="'/cuenta/' + 3"
-                  >Cuenta</router-link
-                >
-              </li>
               <li class="nav-item">
                 <router-link class="nav-link" to="/new-product">Nuevo Producto</router-link>
               </li>
@@ -60,16 +58,25 @@ import FooterPage from "@/components/FooterPage";
 export default {
   components: { FooterPage },
   mounted() {
+    if(localStorage.user){
+      this.$store.commit("loginUser",{
+        token:localStorage.token,
+        user:JSON.parse(localStorage.user)
+      })
+    }
     this.$store.dispatch("loadCategorias");
     this.$store.dispatch("loadTags");
+
   },
 
-  methods: {
+    methods:{
     logout() {
-      this.$store.commit("logoutUser");
-    },
-  },
+      this.$store.commit("logoutUser")
+    }
+  }
 };
+
+
 </script>
 
 
@@ -98,7 +105,7 @@ export default {
   color: #42b983;
 }
 
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 .carousel-container {
   width: 1280px;
   margin: 50px auto;

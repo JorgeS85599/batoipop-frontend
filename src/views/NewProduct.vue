@@ -3,6 +3,7 @@
     <h1>{{ ifEdit ? "Editar producto" : "Añadir producto" }}</h1>
     <ValidationObserver v-slot="{ handleSubmit }">
       <form novalidate @submit.prevent="handleSubmit(addProduct)">
+
         <div class="form-group">
           <label for="newprod-name">Nombre:</label>
           <validation-provider
@@ -82,13 +83,13 @@
 
         <div class="form-group">
           <vue-dropzone
-            ref="myVueDropzone"
-            id="dropzone"
-            :options="dropzoneOptions"
-            :useCustomSlot="true"
-            v-on:vdropzone-success="uploadSuccess"
-            v-on:vdropzone-error="uploadError"
-            v-on:vdropzone-removed-file="fileRemoved"
+              ref="myVueDropzone"
+              id="dropzone"
+              :options="dropzoneOptions"
+              :useCustomSlot="true"
+              v-on:vdropzone-success="uploadSuccess"
+              v-on:vdropzone-error="uploadError"
+              v-on:vdropzone-removed-file="fileRemoved"
           >
             <div class="dropzone-custom-content">
               <h3 class="dropzone-custom-title">
@@ -104,6 +105,7 @@
         <div class="form-group">
           <GoogleMap v-on:sendLocation="saveLocation" />
         </div>
+
 
         <button id="boton" type="submit" class="btn btn-default btn-primary">
           Añadir
@@ -131,9 +133,11 @@ extend("required", required);
 extend("max", max);
 extend("min", min);
 extend("numeric", numeric);
-extend("image", image);
+extend("image",image)
 
 export default {
+
+  
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -159,12 +163,12 @@ export default {
       if (this.ifEdit) {
         api.articulos
           .modify(this.product)
-          .then(() => this.$router.push("/articulos/" + this.product.id))
+          .then((response) => this.$router.push("/articulo/" + response.id))
           .catch((error) => alert(error));
       } else {
         api.articulos
           .create(this.product)
-          .then((response) => console.log(response))
+          .then((response) => this.$router.push("/articulo/" + response.data.id))
           .catch((error) => alert(error));
       }
     },

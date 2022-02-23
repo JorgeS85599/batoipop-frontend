@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!navbarCollapsible) {
             return;
         }
-        if(location.pathname.startsWith('/cuenta/')||location.pathname.startsWith('/login/')){
+        if(location.pathname.startsWith('/cuenta/')||location.pathname.startsWith('/login')){
             navbarCollapsible.classList.add('navbar-shrink')
         }else{
             if (window.scrollY === 0) {
