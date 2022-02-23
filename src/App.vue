@@ -28,8 +28,15 @@
 
               <li class="nav-item" v-else>
                 <a class="nav-link" @click="logout">logout</a>
+              </li>
+
               <li class="nav-item">
-                <router-link class="nav-link" :to="'/cuenta/'+3">Cuenta</router-link>
+                <router-link class="nav-link" :to="'/cuenta/' + 3"
+                  >Cuenta</router-link
+                >
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/new-product">Nuevo Producto</router-link>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#team">Team</a>
@@ -55,17 +62,14 @@ export default {
   mounted() {
     this.$store.dispatch("loadCategorias");
     this.$store.dispatch("loadTags");
-
   },
 
-    methods:{
+  methods: {
     logout() {
-      this.$store.commit("logoutUser")
-    }
-  }
+      this.$store.commit("logoutUser");
+    },
+  },
 };
-
-
 </script>
 
 
@@ -94,7 +98,7 @@ export default {
   color: #42b983;
 }
 
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 .carousel-container {
   width: 1280px;
   margin: 50px auto;

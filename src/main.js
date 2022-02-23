@@ -6,6 +6,7 @@ import store from './store'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "./js/scripts.js";
+
 Vue.config.productionTip = false
 
 Vue.use(VueGoogleMaps, {
