@@ -239,9 +239,6 @@
         </div>
       </div>
     </section>
-
-
-
     <b-modal id="modal-no-backdropcc" hide-backdrop content-class="shadow" title="BootstrapVue">
       <p class="my-2">
         We've added the utility class <code>'shadow'</code>
@@ -255,35 +252,30 @@
       </div>
     </section>
     <section class="page-section">
-      <div class="container">
-        <div
-            style="display: flex; justify-content: center; margin-bottom: 25px"
-        >
-          <div v-for="message in this.articulo.messages" :key="message.id" class="col-9" style="display: flex; flex-direction: row">
-            <div class="col-lg-1 col-md-2 col-sm-3 col-4">
-              <!-- User photo-->
-              <img
+      <div class="container">      
+<div style="display: flex;justify-content: center;flex-direction: column;margin-bottom: 25px;align-items: center;">
+          <div v-for="message in this.articulo.messages" :key="message.id" class="col-9" style="display: flex; flex-direction: row; background-color:#dbdbdb; border-radius:15px;margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-4">
+              <div style="margin-left:14px; margin-top:5px">
+                <img
                   class="img-fluid"
+                  style="border-radius:5px; "
                   src="@/assets/img/portfolio/1.jpg"
                   alt="..."
-              />
-              <p>{{message.usuarioEmisor}}</p>
-
+                />
+                <p>{{message.usuarioEmisor}}</p>
+              </div> 
               <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalR" @click="reportM.message = message.id">
                 Reportar
               </button>
-
-
-
-            </div>
+            </div> 
             <div
-                class="col-lg-11 col-md-10 col-sm-9 col-8"
-                style="margin-left: 10px"
+              class="col-lg-10 col-md-10 col-sm-9 col-8"
+              style="margin-left: 10px;"
             >
-              <p>{{message.message}}</p>
-            </div>
-          </div>
-
+             <p>{{message.message}}</p>
+            </div> 
+          </div> 
 
           <div class="modal fade" id="exampleModalR" tabindex="-1" aria-labelledby="exampleModalLabelR" aria-hidden="true">
             <div class="modal-dialog">
@@ -329,11 +321,6 @@
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
         <div class="text-center">
           <h2 class="section-heading text-uppercase">Preguntas</h2>

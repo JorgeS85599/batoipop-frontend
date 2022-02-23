@@ -3,7 +3,7 @@
     <div id="nav">
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand" href="index.html"
+          <a class="navbar-brand" href="/"
             ><h2>Batoi<em>pop</em></h2></a
           >
           <button
@@ -22,20 +22,15 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/">Home</router-link>
               </li>
+              <li class="nav-item" v-if="$store.getters.isAuthenticated">
+                <router-link class="nav-link" :to="'/cuenta/'+$store.state.user.id">Cuenta</router-link>
+              </li>
               <li class="nav-item" v-if="!$store.getters.isAuthenticated">
                 <a class="nav-link" href="/login">Login</a>
               </li>
 
               <li class="nav-item" v-else>
                 <a class="nav-link" @click="logout">logout</a>
-              <li class="nav-item" v-if="$store.getters.isAuthenticated">
-                <router-link class="nav-link" :to="'/cuenta/'+$store.state.user.id">Cuenta</router-link>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#team">Team</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact</a>
               </li>
             </ul>
           </div>
