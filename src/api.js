@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from './store'
 import router from './router'
 
-const baseURL = 'http://laravel.my/api';
+const baseURL = 'http://batoipop.my/api';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 
@@ -56,6 +56,8 @@ const mensajes = {
     create: (item) => axios.post(`${baseURL}/messages`, item),
     modify: (item) => axios.put(`${baseURL}/messages/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/messages/${id}`),
+    buyArticle: (item) => axios.post(`${baseURL}/buy-message`, item),
+
 };
 
 axios.interceptors.request.use((config) => {
@@ -83,6 +85,14 @@ const valoracion = {
     create: (item) => axios.post(`${baseURL}/valoraciones`, item),
 };
 
+const reportArticle = {
+    create: (item) => axios.post(`${baseURL}/reportArticles`, item),
+};
+
+const reportMessage = {
+    create: (item) => axios.post(`${baseURL}/reportMessage`, item),
+};
+
 
 
 
@@ -92,5 +102,7 @@ export default {
     usuarios,
     tags,
     mensajes,
-    valoracion
+    valoracion,
+    reportArticle,
+    reportMessage
 };
