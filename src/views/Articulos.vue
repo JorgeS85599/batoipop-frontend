@@ -145,8 +145,9 @@
                   type="radio"
                   name="etiqueta"
                   :value="etiqueta.id"
+                  style="display: block"
                 />
-                <label for="etiqueta">{{ etiqueta.name }}</label>
+                <label >{{ etiqueta.name }}</label>
               </div>
 
               <!-- Submit button -->

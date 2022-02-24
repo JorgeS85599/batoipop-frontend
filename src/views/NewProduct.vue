@@ -5,7 +5,7 @@
       <form novalidate @submit.prevent="handleSubmit(addProduct)">
 
         <div class="form-group">
-          <label for="newprod-name">Nombre:</label>
+          <label >Nombre:</label>
           <validation-provider
             rules="required|min:5|max:50"
             v-slot="{ errors }"
@@ -23,7 +23,7 @@
 
         <validation-provider rules="required|min:5|max:255" v-slot="{ errors }">
           <div class="form-group">
-            <label for="newprod-name">Descripcion:</label>
+            <label >Descripcion:</label>
             <div class="md-form">
               <textarea
                 class="md-textarea form-control"
@@ -37,7 +37,7 @@
         </validation-provider>
 
         <div class="form-group">
-          <label for="newprod-name">Categoria:</label>
+          <label >Categoria:</label>
           <validation-provider
             rules="required"
             v-slot="{ errors }"
@@ -90,6 +90,7 @@
               v-on:vdropzone-success="uploadSuccess"
               v-on:vdropzone-error="uploadError"
               v-on:vdropzone-removed-file="fileRemoved"
+              @vdropzone-sending-multiple="addProduct"
           >
             <div class="dropzone-custom-content">
               <h3 class="dropzone-custom-title">
@@ -106,8 +107,7 @@
           <GoogleMap v-on:sendLocation="saveLocation" />
         </div>
 
-
-        <button id="boton" type="submit" class="btn btn-default btn-primary">
+        <button id="boton" type="submit" class="btn btn-default btn-primary" @click="shootPhoto" >
           Añadir
         </button>
       </form>
@@ -152,16 +152,24 @@ export default {
       value: [],
       options: [],
       dropzoneOptions: {
-        url: "https://httpbin.org/post",
+        url: "http://batoipop.my/api/articles",
         addRemoveLinks: true,
         maxFiles: 4,
+        uploadMultiple: true,
+        autoProcessQueue:false
+
       },
+      photo: {}
     };
   },
   methods: {
-    addProduct() {
+    shootPhoto: async  function(){
+      this.$refs.myVueDropzone.processQueue();
+    },
+
+      addProduct: async function(){
       if (this.ifEdit) {
-        api.articulos
+         api.articulos
           .modify(this.product)
           .then((response) => this.$router.push("/articulo/" + response.id))
           .catch((error) => alert(error));
@@ -193,12 +201,6 @@ export default {
       this.product.latitud = location.lat;
       this.product.longitud = location.lng;
     },
-
-    /* se supone que vacia el file
-    <input type="file" ref="inputFile"/>
-
-this.$refs.inputFile.reset();
-    */
   },
 
   computed: {

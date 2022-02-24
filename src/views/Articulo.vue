@@ -115,6 +115,111 @@
                   <th scope="row">Ubicación</th>
                   <td>Puerto Real</td>
                 </tr>
+              <tr>
+                <td>
+                  <!-- Button trigger modal -->
+                  <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Reportar
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabelR" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <div v-if="this.$store.getters.isAuthenticated">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabelR">Reportar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <ValidationObserver v-slot="{ handleSubmit }">
+                            <form @submit.prevent="handleSubmit(reportArticle)">
+                              <div class="modal-body">
+
+                                <div class="form-group form-group-textarea mb-md-0">
+                                  <validation-provider
+                                      rules="min:5|max:150"
+                                      v-slot="{ errors }"
+                                  >
+                                    <label>comentario opcional</label>
+                                    <textarea
+                                        class="form-control"
+                                        placeholder="Your Message"
+                                        style="resize: none"
+                                        v-model="reportA.reportComent"
+                                        name="comentario"
+                                    ></textarea>
+                                    <span class="text-danger">{{ errors[0] }}</span>
+                                  </validation-provider>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                              </div>
+                            </form>
+                          </ValidationObserver>
+                        </div>
+                        <div v-else>
+                          <h2>Tienes que estar login para relizar esta acción</h2>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                    comprar
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <div v-if="this.$store.getters.isAuthenticated">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">Comprar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <ValidationObserver v-slot="{ handleSubmit }">
+                            <form @submit.prevent="handleSubmit(buyArticle)">
+                              <div class="modal-body">
+
+                                <div class="form-group form-group-textarea mb-md-0">
+                                  <validation-provider
+                                      rules="required|min:5|max:150"
+                                      v-slot="{ errors }"
+                                  >
+                                    <label>comentario </label>
+                                    <textarea
+                                        class="form-control"
+                                        placeholder="Your Message"
+                                        style="resize: none"
+                                        v-model="messageBuy.message"
+                                        name="comentario"
+                                    ></textarea>
+                                    <span class="text-danger">{{ errors[0] }}</span>
+                                  </validation-provider>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                              </div>
+                            </form>
+                          </ValidationObserver>
+                        </div>
+                        <div v-else>
+                          <h2>Tienes que estar login para relizar esta acción</h2>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -146,6 +251,10 @@
               style="margin-left: 10px"
             >
              <p>{{message.message}}</p>
+
+              <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalR" @click="reportM.message = message.id">
+                Reportar
+              </button>
             </div>
           </div>
 
