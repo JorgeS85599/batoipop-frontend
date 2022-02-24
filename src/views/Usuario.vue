@@ -74,6 +74,9 @@
         <div style="margin-right: 5px">
           <button @click="ocultarDiv(3,1,2,4)" type="button" class="btn btn-outline-warning">Valorar</button>
         </div>
+        <div style="margin-right: 5px">
+          <button @click="ocultarDiv(5,1,3,2,4)" type="button" class="btn btn-outline-warning">Ofertas</button>
+        </div>
       </div>
       <div id="view-1" class="ocultar">
         <div class="page-section bg-light" id="portfolio">
@@ -221,7 +224,158 @@
             </div> 
           </div> 
         </div> 
-    </div> 
+    </div>
+
+
+
+
+
+
+
+
+
+
+      <!-------------------------------->
+      <div class="container">
+        <div
+            style="display: flex; justify-content: center; margin-bottom: 25px"
+        >
+          <div v-for="message in this.messages" :key="message.id" class="col-9" style="display: flex; flex-direction: row">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-4">
+              <!-- User photo-->
+              <img
+                  class="img-fluid"
+                  src="@/assets/img/portfolio/1.jpg"
+                  alt="..."
+              />
+              <p>{{message.usuarioEmisor}}</p>
+            </div>
+            <div
+                class="col-lg-11 col-md-10 col-sm-9 col-8"
+                style="margin-left: 10px"
+            >
+              <p>{{message.message}}</p>
+              <p >Articulo :  <a class="portfolio-link" data-bs-toggle="modal" @click="goTo('/articulo/' + message.articulo.id)">{{message.articulo.name}}</a> </p>
+
+              <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModalR" @click="acceptBuy.article = message.articulo.id; acceptBuy.user = message.id_user.id;acceptOfert() " >
+                Acceptar Oferta
+              </button>
+            </div>
+          </div>
+
+          <div class="modal fade" id="exampleModalR" tabindex="-1" aria-labelledby="exampleModalLabelR" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <div v-if="this.$store.getters.isAuthenticated">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Valorar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <ValidationObserver v-slot="{ handleSubmit }">
+                    <form @submit.prevent="handleSubmit(reportMessage)">
+                      <div class="modal-body">
+
+                        <div class="form-group form-group-textarea mb-md-0">
+                          <validation-provider
+                              rules="required|min:5|max:150"
+                              v-slot="{ errors }"
+                          >
+                            <label>comentario </label>
+                            <textarea
+                                class="form-control"
+                                placeholder="Your Message"
+                                style="resize: none"
+                                v-model="reportM.reportComent"
+                                name="comentario"
+                            ></textarea>
+                            <span class="text-danger">{{ errors[0] }}</span>
+                          </validation-provider>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                      </div>
+                    </form>
+                  </ValidationObserver>
+                </div>
+                <div v-else>
+                  <h2>Tienes que estar login para relizar esta acción</h2>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form
+              id="contactForm"
+              data-sb-form-api-token="API_TOKEN"
+              @submit.prevent="handleSubmit(saveMensaje)"
+          >
+            <div
+                class="row align-items-stretch mb-5"
+                style="display: flex; justify-content: center"
+            >
+              <div class="col-md-9">
+                <div class="form-group form-group-textarea mb-md-0">
+                  <!-- Message input-->
+                  <validation-provider
+                      rules="required|min:5|max:150"
+                      v-slot="{ errors }"
+                  >
+                    <textarea
+                        class="form-control"
+                        id="message"
+                        placeholder="Your Message"
+                        style="resize: none"
+                        data-sb-validations="required"
+                        v-model="mensaje.message"
+                    ></textarea>
+                    <span class="text-danger">{{ errors[0] }}</span>
+                  </validation-provider>
+                </div>
+              </div>
+            </div>
+            <!-- Submit success message-->
+            <!---->
+            <!-- This is what your users will see when the form-->
+            <!-- has successfully submitted-->
+            <div class="d-none" id="submitSuccessMessage">
+              <div class="text-center text-white mb-3">
+                <div class="fw-bolder">Form submission successful!</div>
+                To activate this form, sign up at
+                <br />
+                <a href="https://startbootstrap.com/solution/contact-forms"
+                >https://startbootstrap.com/solution/contact-forms</a
+                >
+              </div>
+            </div>
+            <!-- Submit error message-->
+            <!---->
+            <!-- This is what your users will see when there is-->
+            <!-- an error submitting the form-->
+            <div class="d-none" id="submitErrorMessage">
+              <div class="text-center text-danger mb-3">
+                Error sending message!
+              </div>
+            </div>
+            <!-- Submit Button-->
+            <div class="text-center">
+              <button
+                  class="btn btn-primary btn-xl text-uppercase"
+                  id="submitButton"
+                  type="submit"
+              >
+                Send Message
+              </button>
+            </div>
+          </form>
+        </ValidationObserver>
+      </div>
+
     </div>
   </section>
 </template>
@@ -239,6 +393,8 @@ export default {
       articulosBuy: {},
       paginaActual: 1,
       newValoracion:{id_user_emissor:4,id_user_receptor:this.id},
+      messages: {},
+      acceptBuy: {},
     };
   },
   methods: {
@@ -260,6 +416,11 @@ export default {
         .getArticleUserBuy(numPagina, this.id)
         .then((response) => (this.articulosBuy = response.data.data))
         .catch((error) => alert(error));
+
+      api.mensajes.
+      getMessageByUserBuy(this.id)
+          .then((response) => (this.messages = response.data.data))
+          .catch((error) => alert(error));
     },
     newValoratio(){
       api.valoracion
@@ -284,6 +445,17 @@ export default {
     isActiveCategory(index) {
       return index == 1 ? "active" : " ";
     },
+    acceptOfert(){
+      console.log(this.acceptBuy)
+      api.articulos.buyArticleFinal(this.acceptBuy)
+      .then((response) => console.log(response))
+      .catch((error)=> alert(error))
+    },
+
+    goTo(path) {
+      this.$router.push(path);
+    },
+
   },
   mounted() {
     this.getDataUserPagina(1)

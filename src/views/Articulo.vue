@@ -252,7 +252,7 @@
             >
              <p>{{message.message}}</p>
 
-              <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalR" @click="reportM.message = message.id">
+              <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalR" @click="reportM.message = message.id" >
                 Reportar
               </button>
             </div>

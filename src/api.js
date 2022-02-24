@@ -15,6 +15,8 @@ const articulos = {
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/articles/${id}`),
+    buyArticleFinal: (item)=>axios.post(`${baseURL}/buy-article`, item),
+    //se que hay que usar put para actulizar  pero larevel me da mucha guerra
 };
 
 
@@ -59,7 +61,7 @@ const mensajes = {
     modify: (item) => axios.put(`${baseURL}/messages/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/messages/${id}`),
     buyArticle: (item) => axios.post(`${baseURL}/buy-message`, item),
-
+    getMessageByUserBuy:(id) => axios.get(`${baseURL}/messagesBuyByUser?id=${id}`),
 };
 
 axios.interceptors.request.use((config) => {
