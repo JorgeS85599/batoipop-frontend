@@ -17,6 +17,7 @@ const articulos = {
     delete: (id) => axios.delete(`${baseURL}/articles/${id}`),
 };
 
+
 const categorias = {
     getAll: () => axios.get(`${baseURL}/categories`),
     getPerPage: (page) => axios.get(`${baseURL}/categories?page=${page}`),
