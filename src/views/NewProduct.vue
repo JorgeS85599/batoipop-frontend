@@ -5,7 +5,7 @@
       <form novalidate @submit.prevent="handleSubmit(addProduct)">
 
         <div class="form-group">
-          <label for="newprod-name">Nombre:</label>
+          <label >Nombre:</label>
           <validation-provider
             rules="required|min:5|max:50"
             v-slot="{ errors }"
@@ -23,7 +23,7 @@
 
         <validation-provider rules="required|min:5|max:255" v-slot="{ errors }">
           <div class="form-group">
-            <label for="newprod-name">Descripcion:</label>
+            <label >Descripcion:</label>
             <div class="md-form">
               <textarea
                 class="md-textarea form-control"
@@ -37,7 +37,7 @@
         </validation-provider>
 
         <div class="form-group">
-          <label for="newprod-name">Categoria:</label>
+          <label >Categoria:</label>
           <validation-provider
             rules="required"
             v-slot="{ errors }"
@@ -58,6 +58,18 @@
         </div>
 
         <div class="form-group">
+          <multiselect
+            v-model="product.etiquetas"
+            tag-placeholder="Add this as new tag"
+            placeholder="Search or add a tag"
+            label="name"
+            track-by="name"
+            :options="options"
+            :multiple="true"
+          ></multiselect>
+        </div>
+
+        <div class="form-group">
           <validation-provider
             rules="required|numeric"
             v-slot="{ errors }"
@@ -69,31 +81,32 @@
           </validation-provider>
         </div>
 
-      <validation-provider name="foto" rules="image" v-slot="{ errors}">
-        <input type="file" @change="oneFileChange" />
-        <div id="preview">
-          <img v-if="photoOne" :src="photoOne" />
+        <div class="form-group">
+          <vue-dropzone
+              ref="myVueDropzone"
+              id="dropzone"
+              :options="dropzoneOptions"
+              :useCustomSlot="true"
+              v-on:vdropzone-success="uploadSuccess"
+              v-on:vdropzone-error="uploadError"
+              v-on:vdropzone-removed-file="fileRemoved"
+          >
+            <div class="dropzone-custom-content">
+              <h3 class="dropzone-custom-title">
+                Drag and drop to upload content!
+              </h3>
+              <div class="subtitle">
+                ...or click to select a file from your computer
+              </div>
+            </div>
+          </vue-dropzone>
         </div>
-        <span class="text-danger">{{ errors[0] }}</span>
-      </validation-provider>
 
-        <input v-if="photoOne" type="file" @change="twoFileChange" />
-        <div id="preview">
-          <img v-if="photoTwo" :src="photoTwo" />
+        <div class="form-group">
+          <GoogleMap v-on:sendLocation="saveLocation" />
         </div>
 
-        <input v-if="photoTwo" type="file" @change="threeFileChange" />
-        <div id="preview">
-          <img v-if="photoThree" :src="photoThree" />
-        </div>
-
-
-                <input  type="text" v-model="product.latitud" />
-        <input  type="text"  v-model="product.longitud" />
-
-
-
-        <button id="boton" type="submit" class="btn btn-default btn-primary">
+        <button id="boton" type="submit" class="btn btn-default btn-primary" @click="shootPhoto" >
           Añadir
         </button>
       </form>
@@ -103,6 +116,10 @@
 
 <script>
 import api from "../api";
+import Multiselect from "vue-multiselect";
+import vueDropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import GoogleMap from "../components/GoogleMap.vue";
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { extend } from "vee-validate";
@@ -123,48 +140,65 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    Multiselect,
+    vueDropzone,
+    GoogleMap,
   },
   data() {
     return {
-      photoOne: null,
-      photoTwo: null,
-      photoThree: null,
       ifEdit: false,
-      product: {},
+      product: { images: [] },
+      value: [],
+      options: [],
+      dropzoneOptions: {
+        url: "https://httpbin.org/post",
+        addRemoveLinks: true,
+        maxFiles: 4,
+        uploadMultiple: true,
+        autoProcessQueue:false
+      },
+      photo: {}
     };
   },
   methods: {
-    addProduct() {
+    shootPhoto: async  function(){
+      this.$refs.myVueDropzone.processQueue();
+    },
+
+      addProduct: async function(){
       if (this.ifEdit) {
-        api.articulos
+         api.articulos
           .modify(this.product)
           .then((response) => this.$router.push("/articulo/" + response.id))
           .catch((error) => alert(error));
       } else {
         api.articulos
           .create(this.product)
-          .then((response) => this.$router.push("/articulo/" + response.data.id))
+          .then((response) =>[  this.$router.push("/articulo/" + response.data.data.id)])
           .catch((error) => alert(error));
       }
     },
     //ver fotos
-    oneFileChange(e) {
-      const file = e.target.files[0];
-      this.photoOne = URL.createObjectURL(file);
+    uploadSuccess(file, response) {
+      console.log(
+        "File Successfully Uploaded with file name: " + response.file
+      );
+      console.log(file);
+      this.product.images.push(file);
     },
-    twoFileChange(e) {
-      const file = e.target.files[0];
-      this.photoTwo = URL.createObjectURL(file);
+    uploadError() {
+      console.log("An Error Occurred");
     },
-    threeFileChange(e) {
-      const file = e.target.files[0];
-      this.photoThree = URL.createObjectURL(file);
+    fileRemoved(file) {
+      let index = this.product.images.findIndex(
+        (item) => item.name === file.name
+      );
+      this.product.images.splice(index, 1);
     },
-    /* se supone que vacia el file
-    <input type="file" ref="inputFile"/>
-
-this.$refs.inputFile.reset();
-    */
+    saveLocation(location) {
+      this.product.latitud = location.lat;
+      this.product.longitud = location.lng;
+    },
   },
 
   computed: {
@@ -173,10 +207,15 @@ this.$refs.inputFile.reset();
     },
   },
 
-  
+  mounted() {
+    this.$store.state.categorias.forEach((categoria) => {
+      this.options.push({ name: categoria.name, id: categoria.id });
+    });
+  },
 };
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
 #preview {
   display: flex;

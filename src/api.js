@@ -9,13 +9,16 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getIte
 const articulos = {
     getAll: () => axios.get(`${baseURL}/articles`),
     getPerPage: (page,filter) => axios.get(`${baseURL}/articles?page=${page}&${filter}`),
-    getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articles?page=${page}&owner_id=${id}`),
-    getArticleUserBuy: (page,id) => axios.get(`${baseURL}/articles?page=${page}&buyer_id=${id}`),
+    getArticleUserPerPage: (page,id) => axios.get(`${baseURL}/articlesUser?id=${id}`),
+    getArticleUserBuy: (page,id) => axios.get(`${baseURL}/articlesUserBuyer?id=${id}`),
     getOne: (id) => axios.get(`${baseURL}/articles/${id}`),
     create: (item) => axios.post(`${baseURL}/articles`, item),
     modify: (item) => axios.put(`${baseURL}/articles/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/articles/${id}`),
+    buyArticleFinal: (item)=>axios.post(`${baseURL}/buy-article`, item),
+    //se que hay que usar put para actulizar  pero larevel me da mucha guerra
 };
+
 
 const categorias = {
     getAll: () => axios.get(`${baseURL}/categories`),
@@ -58,7 +61,7 @@ const mensajes = {
     modify: (item) => axios.put(`${baseURL}/messages/${item.id}`, item),
     delete: (id) => axios.delete(`${baseURL}/messages/${id}`),
     buyArticle: (item) => axios.post(`${baseURL}/buy-message`, item),
-
+    getMessageByUserBuy:(id) => axios.get(`${baseURL}/messagesBuyByUser?id=${id}`),
 };
 
 axios.interceptors.request.use((config) => {
