@@ -169,6 +169,10 @@
                   </div>
                 </td>
                 <td>
+                  <div v-if="articulo.buyer_id">
+                    Vendido
+                  </div>
+                  <div v-else>
                   <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                     comprar
                   </button>
@@ -217,6 +221,7 @@
                         </div>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </td>
               </tr>

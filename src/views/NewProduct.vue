@@ -90,7 +90,6 @@
               v-on:vdropzone-success="uploadSuccess"
               v-on:vdropzone-error="uploadError"
               v-on:vdropzone-removed-file="fileRemoved"
-              @vdropzone-sending-multiple="addProduct"
           >
             <div class="dropzone-custom-content">
               <h3 class="dropzone-custom-title">
@@ -152,12 +151,11 @@ export default {
       value: [],
       options: [],
       dropzoneOptions: {
-        url: "http://batoipop.my/api/articles",
+        url: "https://httpbin.org/post",
         addRemoveLinks: true,
         maxFiles: 4,
         uploadMultiple: true,
         autoProcessQueue:false
-
       },
       photo: {}
     };
@@ -176,7 +174,7 @@ export default {
       } else {
         api.articulos
           .create(this.product)
-          .then((response) => this.$router.push("/articulo/" + response.data.id))
+          .then((response) =>[  this.$router.push("/articulo/" + response.data.data.id)])
           .catch((error) => alert(error));
       }
     },

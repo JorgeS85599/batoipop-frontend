@@ -36,12 +36,6 @@
               <li class="nav-item">
                 <router-link class="nav-link" to="/new-product">Nuevo Producto</router-link>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#team">Team</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact</a>
-              </li>
             </ul>
           </div>
         </div>

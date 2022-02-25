@@ -64,15 +64,15 @@
           </button>
         </div>
         <div style="margin-right: 5px">
-          <button @click="ocultarDiv(2,1,3,4)" type="button" class="btn btn-outline-warning">
+          <button @click="ocultarDiv(2,1,3,4,5)" type="button" class="btn btn-outline-warning">
             Comentarios
           </button>
         </div>
         <div v-if="id == $store.state.user.id" style="margin-right: 5px">
-          <button @click="ocultarDiv(4,1,2,3)" type="button" class="btn btn-outline-warning">Comprados</button>
+          <button @click="ocultarDiv(4,1,2,3,5)" type="button" class="btn btn-outline-warning">Comprados</button>
         </div>
         <div style="margin-right: 5px">
-          <button @click="ocultarDiv(3,1,2,4)" type="button" class="btn btn-outline-warning">Valorar</button>
+          <button @click="ocultarDiv(3,1,2,4,5)" type="button" class="btn btn-outline-warning">Valorar</button>
         </div>
         <div style="margin-right: 5px">
           <button @click="ocultarDiv(5,1,3,2,4)" type="button" class="btn btn-outline-warning">Ofertas</button>
@@ -236,7 +236,7 @@
 
 
       <!-------------------------------->
-      <div class="container">
+      <div id="view-5" class="container ocultar">
         <div
             style="display: flex; justify-content: center; margin-bottom: 25px"
         >
@@ -399,11 +399,12 @@ export default {
   },
   methods: {
     
-    ocultarDiv(id1,id2,id3,id4){
+    ocultarDiv(id1,id2,id3,id4, id5){
         document.querySelector('#view-'+id1).classList.remove('ocultar')
         document.querySelector('#view-'+id2).classList.add('ocultar')
         document.querySelector('#view-'+id3).classList.add('ocultar')
         document.querySelector('#view-'+id4).classList.add('ocultar')
+      document.querySelector('#view-'+id5).classList.add('ocultar')
     },
     getDataUserPagina(numPagina) {
       this.paginaActual = numPagina;
@@ -469,6 +470,7 @@ export default {
       return this.$store.state.categorias;
     },
   },
+
 };
 </script>
 
